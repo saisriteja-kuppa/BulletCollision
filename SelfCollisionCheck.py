@@ -4,11 +4,21 @@ import math
 from datetime import datetime
 import pybullet_data
 import IKConfig
+import numpy as np
+
+def movej(angs, robot):
+    p.setJointMotorControlArray(bodyIndex=robot,
+                                controlMode=p.POSITION_CONTROL,
+                                targetPositions=np.deg2rad(angs),
+                                jointIndices=list(range(2,8,1))
+                                )
+
+p.connect(p.GUI)
 
 
-clid = p.connect(p.SHARED_MEMORY)
-if (clid < 0):
-  p.connect(p.GUI)
+# clid = p.connect(p.SHARED_MEMORY)
+# if (clid < 0):
+#   p.connect(p.GUI)
   #p.connect(p.SHARED_MEMORY_GUI)
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
@@ -18,13 +28,13 @@ p.loadURDF("plane.urdf", [0, 0, -0.3])
 # First let's define a class for the JointInfo.
 
 
-robot = p.loadURDF(IKConfig.ROBOT, [0, 0, 0])
+robot = p.loadURDF(IKConfig.ROBOT, [0, 0, 0.2])
                     # flags=p.URDF_USE_SELF_COLLISION_EXCLUDE_PARENT) 
 
 
 
 
-
+movej([0,0,-90,90,-90,0],robot)
 
 # Let's analyze the R2D2 droid!
 # print(f"robot unique ID: {robot}")
@@ -44,14 +54,11 @@ robot = p.loadURDF(IKConfig.ROBOT, [0, 0, 0])
 
 # print(getContactPoints, getClosestPoints)
 
-
-
-
 useCollisionShapeQuery = False
-
 
 geomBox = p.createCollisionShape(p.GEOM_BOX, halfExtents=[0.2, 0.2, 0.2])
 
+geomBox2 = p.createCollisionShape(p.GEOM_BOX, halfExtents=[0.2, 0.2, 0.2])
 
 
 baseOrientationB = p.getQuaternionFromEuler([0, 0.3, 0])  #[0,0.5,0.5,0]
@@ -59,12 +66,19 @@ basePositionB = [1.5, 0, 1]
 obA = -1
 obB = -1
 
-
 obA = robot #p.createMultiBody(baseMass=0, baseCollisionShapeIndex=geom, basePosition=[0.5, 0, 1])
 obB = p.createMultiBody(baseMass=0,
                         baseCollisionShapeIndex=geomBox,
                         basePosition=basePositionB,
                         baseOrientation=baseOrientationB)
+
+
+baseOrientationB = p.getQuaternionFromEuler([0, 0, 0])
+obB1 = p.createMultiBody(baseMass=0,
+                        baseCollisionShapeIndex=geomBox2,
+                        basePosition=[0.5,0,0.2],
+                        baseOrientation=baseOrientationB)
+
 
 
 lineWidth = 6
@@ -133,6 +147,17 @@ while (p.isConnected()):
                        lineWidth=lineWidth,
                        lifeTime=0,
                        replaceItemUniqueId=lineId)
+    
+    
+    
+    
+  pts = p.getContactPoints()
+  print("num contacts = ", len(pts))
+  for i in pts:
+        for no,j in enumerate(list(i)):
+            print
+        print('points are ', i)
+        print('---------------------------')
   #time.sleep(1./240.)
 
 #removeCollisionShape is optional:
@@ -158,3 +183,10 @@ p.removeCollisionShape(geomBox)
 #     #     print('---------------------------')
 #     time.sleep(1. / 240.)
 #     # break
+
+
+
+
+     
+     
+

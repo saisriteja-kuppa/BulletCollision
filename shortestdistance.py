@@ -79,6 +79,7 @@ while (p.isConnected()):
                        lifeTime=0,
                        replaceItemUniqueId=lineId)
   #time.sleep(1./240.)
+  
 
 #removeCollisionShape is optional:
 #only use removeCollisionShape if the collision shape is not used to create a body
