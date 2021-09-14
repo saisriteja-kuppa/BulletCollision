@@ -1,6 +1,6 @@
 import os
 
-PathToUrdf = '/home/saisriteja/BulletPhysics/multiplerobots/urdfFiles'
+PathToUrdf = '/home/saisriteja/BulletPhysics/Pose/multiplerobots/urdfFiles'
 
 
 ROBOTS = dict()
@@ -15,7 +15,7 @@ ROBOTS['KukaLBR'] = os.path.join(PathToUrdf,'kukalbr/urdf/lbr_iiwa_14_r820.urdf'
 
 
 
-RobotIKfast = '/home/saisriteja/BulletPhysics/multiplerobots/ikfast'
+RobotIKfast = '/home/saisriteja/BulletPhysics/Pose/multiplerobots/ikfast'
 
 
 

@@ -4,6 +4,7 @@ sys.path.append(config.RobotIKfast)
 
 import elfin5.ikfastpy as ikelfin
 # import ur5e.ikfastpy as ikur5
+import staublirx160.ikfastpy as ikrx160
 
 # Eflin Robot 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -14,7 +15,8 @@ def choose_robot(robot):
         return ikelfin
     elif robot == 'UR5e':
         return ikur5
-
+    elif robot == 'Staubli':
+        return ikrx160
     else:
         return None
 

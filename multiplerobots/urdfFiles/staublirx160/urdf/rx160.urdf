@@ -218,5 +218,14 @@
     <child link="tool0"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
+
+<link name="world"/>
+
+  <joint name="world_base" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
 </robot>
 

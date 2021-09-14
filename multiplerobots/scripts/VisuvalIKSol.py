@@ -17,11 +17,13 @@ def getEquidistantPoints(p1, p2, parts):
                numpy.linspace(p1[1], p2[1], parts+1))
 
 
-def movej(angs, robot):
+
+#staubli
+def movej(angs, robot, joint_indices = list(range(2,8,1))):
     p.setJointMotorControlArray(bodyIndex=robot,
                                 controlMode=p.POSITION_CONTROL,
                                 targetPositions=angs,
-                                jointIndices=list(range(2,8,1))
+                                jointIndices=list(range(1,7,1))
                                 )
 
 p.connect(p.GUI)
@@ -33,7 +35,8 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
 
 
-robot_name =  'Elfin'
+# robot_name =  'Elfin'
+robot_name = 'Staubli'
 
 pose = ForwardKinematics([0,0,-90,90,-90,0],robot_name)
 ik_sols = InverseKinematics(pose,robot_name)
