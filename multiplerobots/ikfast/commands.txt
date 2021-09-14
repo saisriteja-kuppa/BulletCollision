@@ -1,0 +1,7 @@
+cd elfin5
+rm ikfast61.cpp
+python setup.py build_ext --inplace
+
+cd ur5e
+rm ikfast61.cpp
+python setup.py build_ext --inplace

@@ -1,0 +1,15 @@
+rm elfin5.backup.dae
+rm elfin5.dae
+rm ikfast61.cpp
+export MYROBOT_NAME="elfin5"
+rosrun collada_urdf urdf_to_collada "$MYROBOT_NAME".urdf "$MYROBOT_NAME".dae
+export IKFAST_PRECISION="5"
+cp "$MYROBOT_NAME".dae "$MYROBOT_NAME".backup.dae  # create a backup of your full precision dae.
+rosrun moveit_kinematics round_collada_numbers.py "$MYROBOT_NAME".dae "$MYROBOT_NAME".dae "$IKFAST_PRECISION"
+openrave-robot.py "$MYROBOT_NAME".dae --info links
+export BASE_LINK="1"
+export EEF_LINK="9"
+export FREE_INDEX="2"
+export PLANNING_GROUP="elfin5"
+export IKFAST_OUTPUT_PATH=/home/saisriteja/poseoptim_ws/src/kinematics/ikfast_elfin/ikfast61.cpp
+python `openrave-config --python-dir`/openravepy/_openravepy_/ikfast.py --robot="$MYROBOT_NAME".dae --iktype=transform6d --baselink="$BASE_LINK" --eelink="$EEF_LINK" --savefile="$IKFAST_OUTPUT_PATH"

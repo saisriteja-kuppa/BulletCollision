@@ -1,0 +1,11 @@
+export MYROBOT_NAME="rx160"
+export IKFAST_OUTPUT_PATH= /home/saisriteja/BulletPhysics/multiplerobots/ikfast/ikfast_staublirx160/staulbi_ikfast61.cpp
+export BASE_LINK="0"
+export EEF_LINK="7"
+rosrun collada_urdf urdf_to_collada "$MYROBOT_NAME".urdf "$MYROBOT_NAME".dae
+export IKFAST_PRECISION="5"
+cp "$MYROBOT_NAME".dae "$MYROBOT_NAME".backup.dae  # create a backup of your full precision dae.
+rosrun moveit_kinematics round_collada_numbers.py "$MYROBOT_NAME".dae "$MYROBOT_NAME".dae "$IKFAST_PRECISION"
+openrave-robot.py "$MYROBOT_NAME".dae --info links
+export PLANNING_GROUP="rx160"
+python `openrave-config --python-dir`/openravepy/_openravepy_/ikfast.py --robot="$MYROBOT_NAME".dae --iktype=transform6d --baselink="$BASE_LINK" --eelink="$EEF_LINK" --savefile="$IKFAST_OUTPUT_PATH"

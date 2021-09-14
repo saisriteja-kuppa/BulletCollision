@@ -1,0 +1,1 @@
+roslaunch urdf_tutorial display.launch model:=lbr_iiwa_14_r820.urdf
